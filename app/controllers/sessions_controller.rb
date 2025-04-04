@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
       redirect_to root_path
     else
       # If user info incorrect, send them back to login form
+      flash[:error] = "Invalid email or password"
       render :new
     end
   end

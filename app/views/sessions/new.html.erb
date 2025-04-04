@@ -6,22 +6,19 @@
 
   <div class="row">
     <div class="col-sm-6 col-sm-offset-1">
-      <%= form_tag '/login' do %>
+      <%= form_tag login_index_path do %>
 
-        <% if form.object.errors.any? %>
-          <div class="alert alert-danger">
-            <strong>The following errors prevented saving:</strong>
-            <ul>
-              <% form.object.errors.full_messages.each do |error| %>
-                <li><%= error %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
+        <div class="form-group">
+          <%= label_tag :email, "Email" %>
+          <%= text_field_tag :email, nil, class: "form-control" %>
+        </div>
 
-        Email: <%= text_field_tag :email %>
-        Password: <%= password_field_tag :password %>
-        <%= submit_tag "Login", class:btn btn=primary %>
+        <div class="form-group">
+          <%= label_tag :password, "Password" %>
+          <%= password_field_tag :password, nil, class: "form-control" %>
+        </div>
+
+        <%= submit_tag "Login", class: "btn btn=primary" %>
 
       <% end %>
     </div>
