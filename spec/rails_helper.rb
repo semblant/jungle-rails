@@ -30,14 +30,34 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+# rails_helper.rb
+
+# First, ensure you're using the appropriate gem
+require 'database_cleaner-active_record'
+
 RSpec.configure do |config|
+  # Disable transactional fixtures as we're using DatabaseCleaner
+  config.use_transactional_fixtures = false
+
+  # DatabaseCleaner configuration
+  config.before(:suite) do
+    # Clean the database before the test suite starts
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    # Start cleaning the database before each test
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    # Clean the database after each test
+    DatabaseCleaner.clean
+  end
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = true
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
@@ -62,3 +82,4 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+

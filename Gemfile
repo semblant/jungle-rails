@@ -57,6 +57,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'rspec-rails'
   gem 'net-smtp', require: false
+  gem 'database_cleaner-active_record'
 end
 
 group :development do
